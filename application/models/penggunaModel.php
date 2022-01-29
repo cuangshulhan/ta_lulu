@@ -79,9 +79,9 @@ class PenggunaModel extends CI_Model
     public function edit($id)
     {
         $query = $this->db->select('*')
-        ->from('m_pengguna')
-        ->where('rec_id', 1)
-        ->where('id', $id);
+            ->from('m_pengguna')
+            ->where('rec_id', 1)
+            ->where('id', $id);
 
         $data = $query->get();
 
@@ -110,7 +110,7 @@ class PenggunaModel extends CI_Model
         return $execute;
     }
 
-    public function changePassword()
+    public function changePassword($post_data)
     {
         $query = array(
             'password' => md5($post_data['password_change']),
@@ -125,7 +125,7 @@ class PenggunaModel extends CI_Model
     }
 
     public function delete($id)
-    { 
+    {
         $query = array(
             'rec_id' => 0,
             'updated_by' => $this->session->userdata('username'),

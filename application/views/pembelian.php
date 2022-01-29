@@ -37,7 +37,7 @@ $this->load->view('layouts/header', array("active" => 'test'));
     <div class="container-fluid mt-4 mb-4">
 
         <center>
-            <h3>Master Barang</h3>
+            <h3>Transaksi Pembelian</h3>
         </center>
         <!-- TODO ================== Form Tambah Data ==========================-->
 
@@ -51,23 +51,36 @@ $this->load->view('layouts/header', array("active" => 'test'));
                 <div class="collapse mb-4 <?= $show ?>" id="formDataAdd">
                     <div class="card">
                         <div class="card-header bg-success">
-                            <span class="btn btn-success">Tambahkan data Barang</span>
+                            <span class="btn btn-success">Tambahkan data Pembelian Header</span>
                         </div>
                         <div class="card-body">
-                            <?php echo form_open('barangController/insert'); ?>
+                            <?php echo form_open('pembelianController/insert'); ?>
                             <div class="form-group">
-                                <label>Nama Barang</label>
-                                <?php echo form_error('barang', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-                                <input type="text" class="form-control" name="barang" id="barang" value="<?php echo set_value('barang'); ?>" autocomplete="off" />
-                            </div>
-                            <div class="form-group">
-                                <label>Satuan</label>
-                                <?php echo form_error('satuan', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-                                <select class="form-control" name="satuan" id="satuan" value="<?php echo set_value('satuan'); ?>">
-                                    <?php foreach ($satuan['data'] as $row) : ?>
-                                        <option value="<?= $row->id ?>"><?= $row->satuan ?></option>
+                                <label>Kode Pemesanan</label>
+                                <?php echo form_error('kode_pesan', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <select class="form-control" name="kode_pesan" id="kode_pesan">
+                                    <?php foreach ($kode_pesan as $row) : ?>
+                                        <?php
+                                            $selected = set_value('kode_pesan') ==  $row->kode_pesan ? 'selected="selected"' : '';
+                                            ?>
+                                        <option <?= $selected ?> value="<?= $row->kode_pesan ?>"><?= $row->kode_pesan ?></option>
                                     <?php endforeach ?>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Faktur Pembelian</label>
+                                <?php echo form_error('faktur', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <input type="text" class="form-control" name="faktur" id="faktur" value="<?php echo set_value('faktur'); ?>" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <?php echo form_error('tanggal', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?php echo set_value('tanggal'); ?>" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label>Keterangan</label>
+                                <?php echo form_error('keterangan', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <textarea class="form-control" name="keterangan" id="keterangan" rows="2"><?php echo set_value('keterangan'); ?></textarea>
 
                             </div>
                             <button type="submit" class="btn btn-success">Simpan</button>
@@ -85,27 +98,40 @@ $this->load->view('layouts/header', array("active" => 'test'));
                 <div class="collapse mb-4 <?= $show_edit ?>" id="formDataEdit">
                     <div class="card">
                         <div class="card-header bg-primary">
-                            <span class="btn btn-primary">Edit data Barang</span>
+                            <span class="btn btn-primary">Edit data Pembelian</span>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white;" onclick="closeEdit()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="card-body">
-                            <?php echo form_open('barangController/update'); ?>
+                            <?php echo form_open('pembelianController/update'); ?>
                             <input type="hidden" class="form-control" name="id" id="id" value="<?php echo set_value('id'); ?>" />
                             <div class="form-group">
-                                <label>Nama Barang</label>
-                                <?php echo form_error('barang_edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-                                <input type="text" class="form-control" name="barang_edit" id="barang_edit" value="<?php echo set_value('barang_edit'); ?>" autocomplete="off" />
-                            </div>
-                            <div class="form-group">
-                                <label>Satuan</label>
-                                <?php echo form_error('satuan_edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-                                <select class="form-control" name="satuan_edit" id="satuan_edit" value="<?php echo set_value('satuan_edit'); ?>">
-                                    <?php foreach ($satuan['data'] as $row) : ?>
-                                        <option value="<?= $row->id ?>"><?= $row->satuan ?></option>
+                                <label>Kode Pemesanan</label>
+                                <?php echo form_error('kode_pesan_edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <select class="form-control" name="kode_pesan_edit" id="kode_pesan_edit" disabled>
+                                    <?php foreach ($kode_pesan as $row) : ?>
+                                        <?php
+                                            $selected = set_value('kode_pesan_edit') ==  $row->kode_pesan ? 'selected="selected"' : '';
+                                            ?>
+                                        <option <?= $selected ?> value="<?= $row->kode_pesan ?>"><?= $row->kode_pesan ?></option>
                                     <?php endforeach ?>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Faktur Pembelian</label>
+                                <?php echo form_error('faktur_edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <input type="text" class="form-control" name="faktur_edit" id="faktur_edit" value="<?php echo set_value('faktur_edit'); ?>" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <?php echo form_error('tanggal_edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <input type="date" class="form-control" name="tanggal_edit" id="tanggal_edit" value="<?php echo set_value('tanggal_edit'); ?>" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label>Keterangan</label>
+                                <?php echo form_error('keterangan_edit', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                                <textarea class="form-control" name="keterangan_edit" id="keterangan_edit" rows="2"><?php echo set_value('keterangan_edit'); ?></textarea>
 
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
@@ -123,45 +149,56 @@ $this->load->view('layouts/header', array("active" => 'test'));
                 <div class="collapse mb-4" id="formDataDetail">
                     <div class="card">
                         <div class="card-header bg-secondary">
-                            <span class="btn btn-secondary">Detail Data Barang</span>
+                            <span class="btn btn-secondary">Detail Data Pembelian</span>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white;" onclick="closeDetail()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-5">
                                     <div class="form-group">
-                                        <label>Nama Barang</label>
-                                        <input type="text" class="form-control" name="barang_detail" id="barang_detail" autocomplete="off" readonly />
+                                        <label>Kode Pemesanan</label>
+                                        <input type="text" class="form-control" name="kode_pesan_detail" id="kode_pesan_detail" autocomplete="off" readonly />
                                     </div>
-
                                     <div class="form-group">
-                                        <label>Satuan Barang</label>
-                                        <select class="form-control" name="satuan_detail" id="satuan_detail" disabled>
-                                            <?php foreach ($satuan['data'] as $row) : ?>
-                                                <option value="<?= $row->id ?>"><?= $row->satuan ?></option>
-                                            <?php endforeach ?>
-                                        </select>
+                                        <label>Faktur Beli</label>
+                                        <input type="text" class="form-control" name="faktur_detail" id="faktur_detail" autocomplete="off" readonly />
                                     </div>
-                                    <button type="button" class="btn btn-secondary mb-2" onclick="insertDetail()">Simpan Detail</button>
-                                    <button type="button" class="btn btn-secondary mb-2" onclick="getNoIdentitas()">Generate NoID</button>
-
+                                    <div class="form-group">
+                                        <label>Tanggal</label>
+                                        <input type="date" class="form-control" name="tanggal_detail" id="tanggal_detail" autocomplete="off" disabled />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Keterangan</label>
+                                        <textarea class="form-control" name="keterangan_detail" id="keterangan_detail" rows="2" disabled></textarea>
+                                    </div>
+                                    <button type="button" id="simpan_detail" class="btn btn-secondary mb-2" onclick="insertDetail()">Simpan Detail</button>
                                 </div>
-                                <div class="col-md-9 card bg-secondary">
+
+                                <div class="col-md-7 card bg-secondary">
                                     <div class="row card-body text-white">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>No. Identitas</label>
-                                                <input type="text" class="form-control" name="no_id" id="no_id" autocomplete="off" />
+                                                <label>Nama Barang | Satuan</label>
+                                                <select class="form-control" name="barang_detail" id="barang_detail"></select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Tgl Masuk</label>
-                                                <input type="date" class="form-control" name="tgl_masuk_detail" id="tgl_masuk_detail" autocomplete="off" />
-                                            </div>
-
+                                            <table width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label>No Identitas</label>
+                                                            <input type="text" class="form-control" name="no_id_detail" id="no_id_detail" autocomplete="off" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        &nbsp;
+                                                        <button type="button" class="btn btn-light" style="margin-top: 15px;" onclick="getNoIdentitas()">....</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -188,13 +225,6 @@ $this->load->view('layouts/header', array("active" => 'test'));
                                             </div>
                                             <div id="dataTableDetail" style="height: 49vh;overflow-x:auto;overflow-y:auto;"></div>
                                             <div class="d-flex">
-                                                <div class="p-2">
-                                                    <select class="form-control" style="width: 100%;" onchange="btnSortTglDetail(this.value)">
-                                                        <option value="all">Semua</option>
-                                                        <option value="stock">Tersedia</option>
-                                                        <option value="stock_out">Sudah Keluar</option>
-                                                    </select>
-                                                </div>
                                                 <div class="ml-auto p-2">
                                                     <nav aria-label="Page navigation example">
                                                         <ul class="pagination" id="pagination_detail"> </ul>
@@ -213,6 +243,35 @@ $this->load->view('layouts/header', array("active" => 'test'));
             </div>
         </div>
 
+        <!-- TODO ================== Form Pengajuan ==========================-->
+
+        <div class=" row">
+            <div class="col">
+                <div class="collapse mb-4" id="formPengajuan">
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <span class="btn btn-info">Form Pengajuan</span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white;" onclick="closeSubmission()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <input type="hidden" class="form-control" name="id_header_pesanan" id="id_header_pesanan" />
+                            <div class="form-group">
+                                <label>Pimpinan Terkait</label>
+                                <select class="form-control" name="pimpinan_terkait" id="pimpinan_terkait">
+                                    <?php foreach ($pimpinan['data'] as $row) : ?>
+                                        <option value="<?= $row->id ?>"><?= $row->fullname ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-info" onclick="btnAjukanPesanan()">Ajukan Pembelian</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- TODO ================== DATA ON TABLE ==========================-->
 
@@ -226,12 +285,6 @@ $this->load->view('layouts/header', array("active" => 'test'));
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
-                        </select>
-                    </div>
-                    <div class="p-2">
-                        <select class="form-control" style="width: 110px;" onchange="btnSearchBy(this.value)">
-                            <option value="barang">BARANG</option>
-                            <option value="satuan">SATUAN</option>
                         </select>
                     </div>
                     <div class="p-2">
@@ -255,9 +308,9 @@ $this->load->view('layouts/header', array("active" => 'test'));
         var limit = 5;
         var page = 1;
         var sort_by = 'desc';
-        var order_by = 'id';
+        var order_by = 'kode_pesan';
         var keyword = '';
-        var search_by = 'barang';
+        var search_by = 'kode_pesan';
 
         $(document).ready(function() {
             Datatable();
@@ -285,7 +338,7 @@ $this->load->view('layouts/header', array("active" => 'test'));
 
         btnEdit = (id) => {
             $.ajax({
-                url: "<?php echo base_url('barangController/edit'); ?>",
+                url: "<?php echo base_url('pembelianController/edit'); ?>",
                 type: 'post',
                 data: {
                     id: id,
@@ -294,8 +347,10 @@ $this->load->view('layouts/header', array("active" => 'test'));
                 success: function(response) {
                     let data = response.data;
                     $('#id').val(data.id);
-                    $('#barang_edit').val(data.barang);
-                    $('#satuan_edit').val(data.id_satuan).change();
+                    $('#kode_pesan_edit').val(data.kode_pesan).change();
+                    $('#faktur_edit').val(data.faktur_beli);
+                    $('#tanggal_edit').val(data.tanggal);
+                    $('#keterangan_edit').val(data.keterangan);
 
                     $('#formDataEdit').hide(100);
                     $('#formDataEdit').show(500);
@@ -311,7 +366,7 @@ $this->load->view('layouts/header', array("active" => 'test'));
         Datatable = () => {
 
             $.ajax({
-                url: "<?php echo base_url('barangController/datatable'); ?>",
+                url: "<?php echo base_url('pembelianController/datatable'); ?>",
                 type: 'post',
                 data: {
                     limit: limit,
@@ -319,7 +374,7 @@ $this->load->view('layouts/header', array("active" => 'test'));
                     order_by: order_by,
                     sort_by: sort_by,
                     keyword: keyword,
-                    search_by: search_by
+                    search_by: search_by,
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -331,31 +386,34 @@ $this->load->view('layouts/header', array("active" => 'test'));
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col" width="60vw">#</th>
-                                <th scope="col">BARANG</th>
-                                <th scope="col">SATUAN</th>
-                                <th scope="col">JUMLAH</th>
-                                <th scope="col" width="150vw" class="text-center">Action</th>
+                                <th scope="col">KODE&nbsp;PESAN</th>
+                                <th scope="col">TANGGAL</th>
+                                <th scope="col">FAKTUR&nbsp;BELI</th>
+                                <th scope="col">KETERANGAN</th>
+                                <th scope="col" width="220vw" class="text-center">ACTION</th>
                             </tr>
                         </thead>
                         <tbody>`;
                     if (response.recordsTotal == 0) {
-                        dataTable = dataTable + `<td colspan="5" class="text-center">Data tidak ditemukan</td>`;
+                        dataTable = dataTable + `<td colspan="8" class="text-center">Data tidak ditemukan</td>`;
 
                     } else {
                         var no = response.offset;
                         for (let i = 0; i < data.length; i++) {
                             no++;
+
                             dataTable = dataTable + `<tr>
                                 <th scope="row">${no}</th>
-                                <td>${data[i].barang}</td>
-                                <td>${data[i].satuan}</td>
-                                <td>${data[i].jumlah_barang}</td>
+                                <td>${data[i].kode_pesan}</td>
+                                <td>${data[i].tanggal}</td>
+                                <td>${data[i].faktur_beli}</td>
+                                <td><textarea cols="30" rows="1">${data[i].keterangan}</textarea></td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm" aria-pressed="true" title="Detail Data" data-toggle="collapse" aria-expanded="false" onclick="btnDetail(${data[i].id}, '${data[i].barang}', ${data[i].id_satuan})"><i class="far fa-folder-open"></i></button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" aria-pressed="true" title="Detail Data" data-toggle="collapse" aria-expanded="false" onclick="btnDetail('${data[i].id}')"><i class="far fa-folder-open"></i></button>
 
                                     <button type="button" class="btn btn-outline-primary btn-sm" aria-pressed="true" title="Edit data" data-toggle="collapse" aria-expanded="false" onclick="btnEdit(${data[i].id})"><i class="far fa-edit"></i></button>
 
-                                   <a href="<?= base_url() ?>barangController/delete/${data[i].id}" onclick="return confirm('Apa kamu yakin akan menghapus data item ini?');">
+                                   <a href="<?= base_url() ?>pembelianController/delete/${data[i].id}" onclick="return confirm('Apa kamu yakin akan menghapus data item ini?');">
                                    <button type="button" class="btn btn-outline-danger btn-sm" aria-pressed="true" title="Hapus data" ><i class="far fa-trash-alt"></i></button>
                                    </a>
                                     
@@ -391,18 +449,17 @@ $this->load->view('layouts/header', array("active" => 'test'));
         var limit_detail = 5;
         var page_detail = 1;
         var sort_by_detail = 'desc';
-        var order_by_detail = 'tgl_masuk';
+        var order_by_detail = 'id';
         var keyword_detail = '';
-        var search_by_detail = 'no_identitas';
-        var sort_by_tgl_detail = 'all';
+        var search_by_detail = 'barang';
+        // var sort_by_tgl_detail = 'all';
 
-        btnDetail = (id, barang, satuan) => {
+        btnDetail = (id) => {
 
             id_detail = id;
             DatatableDetail();
-
-            $('#barang_detail').val(barang);
-            $('#satuan_detail').val(satuan).change();
+            DetailHeader(id)
+            MasterBarang();
 
             $('#formDataDetail').hide(100);
             $('#formDataDetail').show(500);
@@ -438,10 +495,49 @@ $this->load->view('layouts/header', array("active" => 'test'));
             DatatableDetail();
         }
 
+        DetailHeader = (id) => {
+
+            $.ajax({
+                url: "<?php echo base_url('pembelianController/detailHeader'); ?>",
+                type: 'post',
+                data: {
+                    id: id,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status) {
+                        $('#kode_pesan_detail').val(response.data['kode_pesan']);
+                        $('#faktur_detail').val(response.data['faktur_beli']);
+                        $('#tanggal_detail').val(response.data['tanggal']);
+                        $('#keterangan_detail').val(response.data['keterangan']);
+                    }
+                }
+            });
+        }
+
+        MasterBarang = () => {
+
+            $.ajax({
+                url: "<?php echo base_url('pembelianController/masterBarang'); ?>",
+                type: 'post',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status) {
+                        var barang_detail = '';
+                        for (let i = 0; i < response.data.length; i++) {
+                            barang_detail = barang_detail + `<option value="${response.data[i].id}">${response.data[i].barang} | ${response.data[i].satuan}</option>`;
+                        }
+
+                        $('#barang_detail').html(barang_detail);
+                    }
+                }
+            });
+        }
+
         DatatableDetail = () => {
 
             $.ajax({
-                url: "<?php echo base_url('barangController/datatableDetail'); ?>",
+                url: "<?php echo base_url('pembelianController/datatableDetail'); ?>",
                 type: 'post',
                 data: {
                     id: id_detail,
@@ -451,7 +547,7 @@ $this->load->view('layouts/header', array("active" => 'test'));
                     sort_by: sort_by_detail,
                     keyword: keyword_detail,
                     search_by: search_by_detail,
-                    sort_by_tgl: sort_by_tgl_detail,
+                    // sort_by_tgl: sort_by_tgl_detail,
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -463,16 +559,17 @@ $this->load->view('layouts/header', array("active" => 'test'));
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col" width="60vw">#</th>
-                                <th>NO.&nbsp;IDENTITAS</th>
-                                <th>TGL.&nbsp;MASUK</th>
-                                <th>TGL.&nbsp;KELUAR</th>
+                                <th>NAMA&nbsp;BARANG</th>
+                                <th>NO&nbsp;IDENTITAS</th>
+                                <th>TGL&nbsp;MASUK</th>
+                                <th>TGL&nbsp;KELUAR</th>
                                 <th>KETERANGAN</th>
-                                <th scope="col" width="150vw" class="text-center">Action</th>
+                                <th scope="col" width="150vw" class="text-center">ACTION</th>
                             </tr>
                         </thead>
                         <tbody class="bg-light">`;
                     if (response.recordsTotal == 0) {
-                        dataTable = dataTable + `<td colspan="6" class="text-center">Data tidak ditemukan</td>`;
+                        dataTable = dataTable + `<td colspan="8" class="text-center">Data tidak ditemukan</td>`;
 
                     } else {
                         var no = response.offset;
@@ -481,15 +578,14 @@ $this->load->view('layouts/header', array("active" => 'test'));
                             var disableButton = data[i].tgl_keluar != null ? 'disabled' : ''
                             dataTable = dataTable + `<tr>
                             <th scope="row">${no}</th>
+                            <td>${data[i].barang}</td>
                             <td>${data[i].no_identitas}</td>
                             <td>${data[i].tgl_masuk}</td>
-                            <td>${data[i].tgl_keluar != null ? data[i].tgl_keluar : ''}</td>
-                            <td>${data[i].keterangan}</td>
+                            <td>${data[i].tgl_keluar == null ? '' : data[i].tgl_keluar}</td>
+                            <td><textarea cols="30" rows="1">${data[i].keterangan}</textarea></td>
                             <td class="text-center">
 
-                            <button type="button" class="btn btn-outline-primary btn-sm" aria-pressed="true" title="Unduh Qr Code" onclick="qrCodeDetail('${data[i].no_identitas}')"><i class="fas fa-qrcode"></i></button>
-
-                            <button type="button" class="btn btn-outline-danger btn-sm" aria-pressed="true" title="Hapus data" ${disableButton} onclick="deleteDetail('${data[i].no_identitas}')"><i class="far fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-outline-danger btn-sm" aria-pressed="true" title="Hapus data" ${disableButton} onclick="deleteDetail(${data[i].id}, '${data[i].no_identitas}', ${data[i].id_barang})"><i class="far fa-trash-alt"></i></button>
                                 
                             </td> 
                         </tr>`;
@@ -521,28 +617,27 @@ $this->load->view('layouts/header', array("active" => 'test'));
 
         insertDetail = () => {
 
-            if ($('#no_id').val() == '' || $('#tgl_masuk_detail').val() == '' || $('#ket_detail').val() == '') {
+            if ($('#barang_detail').val() == '' || $('#no_id_detail').val() == '' || $('#ket_detail').val() == '') {
                 alert('Form input detail tidak boleh kosong');
                 return false;
             }
 
             $.ajax({
-                url: "<?php echo base_url('barangController/insertDetail'); ?>",
+                url: "<?php echo base_url('pembelianController/insertDetail'); ?>",
                 type: 'post',
                 data: {
-                    id_barang: id_detail,
-                    no_id: $('#no_id').val(),
-                    tgl_masuk: $('#tgl_masuk_detail').val(),
+                    id_beli: id_detail,
+                    barang: $('#barang_detail').val(),
+                    no_identitas: $('#no_id_detail').val(),
                     keterangan: $('#ket_detail').val(),
+                    tgl_masuk: $('#tanggal_detail').val(),
                 },
                 dataType: 'json',
                 success: function(response) {
                     if (response.status) {
                         alert(response.message)
                         DatatableDetail();
-                        Datatable();
-                        $('#no_id').val('');
-                        $('#tgl_masuk_detail').val('');
+                        $('#no_id_detail').val('');
                         $('#ket_detail').val('');
                     } else
                         alert(response.message)
@@ -551,23 +646,23 @@ $this->load->view('layouts/header', array("active" => 'test'));
 
         }
 
-        deleteDetail = (no_id) => {
+        deleteDetail = (id, no_id, id_barang) => {
 
             if (confirm("Apakah anda yakin ingin menghapus ini ?")) {
 
                 $.ajax({
-                    url: "<?php echo base_url('barangController/deleteDetail/'); ?>",
+                    url: "<?php echo base_url('pembelianController/deleteDetail'); ?>",
                     type: 'post',
                     data: {
-                        id_barang: id_detail,
+                        id: id,
                         no_id: no_id,
+                        id_barang: id_barang,
                     },
                     dataType: 'json',
                     success: function(response) {
                         if (response.status) {
                             alert(response.message)
                             DatatableDetail();
-                            Datatable();
                         } else
                             alert(response.message)
                     }
@@ -578,18 +673,56 @@ $this->load->view('layouts/header', array("active" => 'test'));
         getNoIdentitas = () => {
 
             $.ajax({
-                url: "<?php echo base_url('barangController/getNoIdentitas'); ?>",
+                url: "<?php echo base_url('pembelianController/getNoIdentitas'); ?>",
                 type: 'post',
                 dataType: 'text',
                 success: function(response) {
-                    $('#no_id').val(response);
+                    $('#no_id_detail').val(response);
                 }
             });
         }
 
-        qrCodeDetail = (NoID) => {
+        btnSubmission = (kode_pesan) => {
 
-            var page = `<?php echo base_url('barangController/download_qrcode'); ?>?data=${NoID}`;
+            $('#id_header_pesanan').val(kode_pesan);
+
+            $('#formPengajuan').hide(100);
+            $('#formPengajuan').show(500);
+        }
+
+        closeSubmission = () => {
+
+            $('#formPengajuan').hide(500);
+        }
+
+        btnAjukanPesanan = (id_header) => {
+
+            if ($('#pimpinan_terkait').val() == '') {
+                alert('Form input Pengajuan tidak boleh kosong');
+                return false;
+            }
+
+            $.ajax({
+                url: "<?php echo base_url('pembelianController/insertPengajuan'); ?>",
+                type: 'post',
+                data: {
+                    kode_pesan: $('#id_header_pesanan').val(),
+                    pimpinan: $('#pimpinan_terkait').val(),
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status) {
+                        alert(response.message)
+                        Datatable();
+                    } else
+                        alert(response.message)
+                }
+            });
+        }
+
+        btnprint = (kode_pesan) => {
+
+            var page = `<?php echo base_url('pembelianController/printData/'); ?>${kode_pesan}`;
             window.open(page);
         }
     </script>

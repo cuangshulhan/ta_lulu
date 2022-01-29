@@ -23,7 +23,7 @@ class BarangController extends CI_Controller
         $data['status'] = $status;
         $data['message'] = $message;
         $data['valid_error'] = '';
-        $data['satuan'] = $this->barangModel->get_data('m_satuan','*','rec_id',1);
+        $data['satuan'] = $this->barangModel->get_data('m_satuan', '*', 'rec_id', 1);
         $this->load->view('barang', $data);
     }
 
@@ -121,5 +121,83 @@ class BarangController extends CI_Controller
             $message = 'Data_berhasil_dihapus!';
         }
         redirect(base_url('barangController/index/' . $status . '/' . $message));
+    }
+
+    public function datatableDetail()
+    {
+        $output = $this->barangModel->datatableDetail($this->input->post());
+        $this->output->set_output(json_encode($output));
+    }
+
+    public function insertDetail()
+    {
+        $execute = $this->barangModel->insertDetail($this->input->post());
+
+        if (!$execute) {
+            $output = array(
+                "status" => false,
+                "message" => 'Data gagal ditambahkan',
+            );
+        } else {
+            $output = array(
+                "status" => true,
+                "message" => 'Data berhasil ditambahkan',
+            );
+        }
+
+        $this->output->set_output(json_encode($output));
+    }
+
+    public function deleteDetail()
+    {
+        $execute = $this->barangModel->deleteDetail($this->input->post());
+
+        if (!$execute) {
+            $output = array(
+                "status" => false,
+                "message" => 'Data gagal dihapus',
+            );
+        } else {
+            $output = array(
+                "status" => true,
+                "message" => 'Data berhasil dihapus',
+            );
+        }
+
+        $this->output->set_output(json_encode($output));
+    }
+
+    public function getNoIdentitas()
+    {
+        $output = $this->barangModel->getNoIdentitas();
+
+        $kode = strtoupper($output[0]['kode']);
+        $tahun = $output[0]['tahun'];
+        $number = $output[0]['number'];
+
+        $generate_number = $kode . '-' . $tahun . '-' . sprintf("%04s", $number);
+
+        echo $generate_number;
+    }
+
+    public function download_qrcode()
+    {
+        $file = 'assets/images/qrcode_barang/' . $_GET['data'] . '.png';
+
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename=' . basename($file));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: private');
+            header('Pragma: private');
+            header('Content-Length: ' . filesize($file));
+            ob_clean();
+            flush();
+            readfile($file);
+
+            exit;
+        }
     }
 }

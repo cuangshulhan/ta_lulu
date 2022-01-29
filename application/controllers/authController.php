@@ -53,6 +53,7 @@ class AuthController extends CI_Controller
                 $this->load->view('login', ["message" => "Username atau Password salah!"]);
             else {
                 $this->session->set_userdata('username', $data->username);
+                $this->session->set_userdata('id_pengguna', $data->id);
                 $this->session->set_userdata('status_login', 'masuk');
                 $this->session->set_userdata('level', $data->level);
 
@@ -64,6 +65,7 @@ class AuthController extends CI_Controller
     public function logout()
     {
         unset($_SESSION['username']);
+        unset($_SESSION['id_pengguna']);
         unset($_SESSION['password']);
         unset($_SESSION['status_login']);
         unset($_SESSION['level']);
