@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100411
 File Encoding         : 65001
 
-Date: 2022-01-30 02:36:50
+Date: 2022-01-30 19:37:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `generate_number` (
 -- ----------------------------
 -- Records of generate_number
 -- ----------------------------
-INSERT INTO `generate_number` VALUES ('2', 'sn', '2022', '11');
+INSERT INTO `generate_number` VALUES ('2', 'sn', '2022', '16');
 INSERT INTO `generate_number` VALUES ('3', 'kpn', '2022', '7');
 
 -- ----------------------------
@@ -55,7 +55,7 @@ CREATE TABLE `m_barang` (
 -- ----------------------------
 INSERT INTO `m_barang` VALUES ('1', 'Kampas Rem', '1', '4', 'cuang', '2022-01-30 02:14:49', null, '2022-01-30 02:14:49', '1');
 INSERT INTO `m_barang` VALUES ('2', 'Kabel', '19', '0', 'cuang', '2022-01-15 11:21:31', 'cuang', '2022-01-15 11:21:31', '0');
-INSERT INTO `m_barang` VALUES ('3', 'ShockBreaker', '1', '0', 'cuang', '2022-01-25 16:05:50', null, '2022-01-25 16:05:50', '1');
+INSERT INTO `m_barang` VALUES ('3', 'ShockBreaker', '1', '5', 'cuang', '2022-01-30 12:39:15', null, '2022-01-30 12:39:15', '1');
 
 -- ----------------------------
 -- Table structure for m_barang_detail
@@ -87,6 +87,11 @@ INSERT INTO `m_barang_detail` VALUES ('SN-2022-0005', '1', 'qdqdqdqwd', '2022-01
 INSERT INTO `m_barang_detail` VALUES ('SN-2022-0008', '1', '----', '2022-01-23 15:18:58', null, 'aulia', '2022-01-29 12:11:47', 'aulia', '2022-01-29 12:11:47', '1');
 INSERT INTO `m_barang_detail` VALUES ('SN-2022-0009', '3', 'test', '2022-01-23 15:26:57', null, 'aulia', '2022-01-25 16:05:50', 'aulia', '2022-01-25 16:05:50', '0');
 INSERT INTO `m_barang_detail` VALUES ('SN-2022-0010', '1', '-', '2022-01-23 11:03:14', null, 'aulia', '2022-01-29 11:03:14', null, null, '1');
+INSERT INTO `m_barang_detail` VALUES ('SN-2022-0011', '3', '-', '2022-01-28 12:38:42', null, 'aulia', '2022-01-30 12:38:42', null, null, '1');
+INSERT INTO `m_barang_detail` VALUES ('SN-2022-0012', '3', '-', '2022-01-28 12:38:51', null, 'aulia', '2022-01-30 12:38:51', null, null, '1');
+INSERT INTO `m_barang_detail` VALUES ('SN-2022-0013', '3', '-', '2022-01-28 12:38:57', null, 'aulia', '2022-01-30 12:38:57', null, null, '1');
+INSERT INTO `m_barang_detail` VALUES ('SN-2022-0014', '3', '-', '2022-01-28 12:39:05', null, 'aulia', '2022-01-30 12:39:05', null, null, '1');
+INSERT INTO `m_barang_detail` VALUES ('SN-2022-0015', '3', '-', '2022-01-28 12:39:15', null, 'aulia', '2022-01-30 12:39:15', null, null, '1');
 
 -- ----------------------------
 -- Table structure for m_kendaraan
@@ -216,12 +221,17 @@ CREATE TABLE `t_beli_d` (
   `no_identitas` varchar(100) DEFAULT NULL,
   `keterangan` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_beli_d
 -- ----------------------------
 INSERT INTO `t_beli_d` VALUES ('7', '2', '1', 'SN-2022-0010', '-');
+INSERT INTO `t_beli_d` VALUES ('8', '1', '3', 'SN-2022-0011', '-');
+INSERT INTO `t_beli_d` VALUES ('9', '1', '3', 'SN-2022-0012', '-');
+INSERT INTO `t_beli_d` VALUES ('10', '1', '3', 'SN-2022-0013', '-');
+INSERT INTO `t_beli_d` VALUES ('11', '1', '3', 'SN-2022-0014', '-');
+INSERT INTO `t_beli_d` VALUES ('12', '1', '3', 'SN-2022-0015', '-');
 
 -- ----------------------------
 -- Table structure for t_beli_h
@@ -240,11 +250,12 @@ CREATE TABLE `t_beli_h` (
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   `rec_id` int(11) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_beli_h
 -- ----------------------------
+INSERT INTO `t_beli_h` VALUES ('1', 'KPN-2022-0006', '2022-01-28', '-', '1231', null, 'aulia', '2022-01-30 12:37:07', null, null, '1');
 
 -- ----------------------------
 -- Table structure for t_pemakaian
