@@ -23,7 +23,7 @@ class PembelianController extends CI_Controller
         $data['status'] = $status;
         $data['message'] = $message;
         $data['valid_error'] = '';
-        
+
         // $query = "SELECT a.kode_pesan FROM t_pesan_h a LEFT JOIN t_beli_h b ON a.kode_pesan = b.kode_pesan WHERE a.rec_id = 1 AND a.kode_pesan != b.kode_pesan OR b.kode_pesan is null AND a.`status` = 'Diterima'";
 
         $query = "SELECT kode_pesan FROM t_pesan_h WHERE rec_id = 1 AND `status` = 'Diterima'";
@@ -40,7 +40,7 @@ class PembelianController extends CI_Controller
 
     public function insert()
     {
-        $this->form_validation->set_rules('kode_pesan', 'Kode Pemesanan', 'required|is_unique[t_beli_h.kode_pesan]');
+        $this->form_validation->set_rules('kode_pesan', 'Kode Pemesanan', 'required');
         $this->form_validation->set_rules('faktur', 'Faktur pembelian', 'required');
         $this->form_validation->set_rules('tanggal', 'Tanggal pembelian', 'required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'required');

@@ -37,6 +37,9 @@
 
     $laporan = '';
     $stok_barang = '';
+    $lap_pemesanan = '';
+    $lap_pembelian = '';
+    $lap_pemakaian = '';
 
     if ($menu == 'beranda')
         $beranda = 'active';
@@ -66,6 +69,12 @@
         $laporan = 'active';
         if ($submenu == 'stok_barang')
             $stok_barang = 'active';
+        elseif ($submenu == 'pemesanan')
+            $lap_pemesanan = 'active';
+        elseif ($submenu == 'pembelian')
+            $lap_pembelian = 'active';
+        elseif ($submenu == 'pemakaian')
+            $lap_pemakaian = 'active';
     }
     ?>
 
@@ -110,9 +119,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a href="<?= base_url('laporanController/stok_barang') ?>" class="dropdown-item" <?= $stok_barang ?>>Stok Barang</a>
-                            <a class="dropdown-item" href="#">Pemesanan</a>
-                            <a class="dropdown-item" href="#">Pembelian</a>
-                            <a class="dropdown-item" href="#">Pemakaian</a>
+                            <a href="<?= base_url('laporanController/pemesanan') ?>" class="dropdown-item" <?= $lap_pemesanan ?>>Pemesanan</a>
+                            <a href="<?= base_url('laporanController/pembelian') ?>" class="dropdown-item" <?= $lap_pembelian ?>>Pembelian</a>
+                            <a href="<?= base_url('laporanController/pemakaian') ?>" class="dropdown-item" <?= $lap_pemakaian ?>>Pemakaian</a>
                         </div>
                     </li>
                 </ul>
@@ -164,9 +173,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a href="<?= base_url('laporanController/stok_barang') ?>" class="dropdown-item" <?= $stok_barang ?>>Stok Barang</a>
-                            <a class="dropdown-item" href="#">Pemesanan</a>
-                            <a class="dropdown-item" href="#">Pembelian</a>
-                            <a class="dropdown-item" href="#">Pemakaian</a>
+                            <a href="<?= base_url('laporanController/pemesanan') ?>" class="dropdown-item" <?= $lap_pemesanan ?>>Pemesanan</a>
+                            <a href="<?= base_url('laporanController/pembelian') ?>" class="dropdown-item" <?= $lap_pembelian ?>>Pembelian</a>
+                            <a href="<?= base_url('laporanController/pemakaian') ?>" class="dropdown-item" <?= $lap_pemakaian ?>>Pemakaian</a>
                         </div>
                     </li>
                 </ul>
@@ -204,10 +213,10 @@
                             Laporan
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Stok Barang</a>
-                            <a class="dropdown-item" href="#">Pemesanan</a>
-                            <a class="dropdown-item" href="#">Pembelian</a>
-                            <a class="dropdown-item" href="#">Pemakaian</a>
+                            <a href="<?= base_url('laporanController/stok_barang') ?>" class="dropdown-item" <?= $stok_barang ?>>Stok Barang</a>
+                            <a href="<?= base_url('laporanController/pemesanan') ?>" class="dropdown-item" <?= $lap_pemesanan ?>>Pemesanan</a>
+                            <a href="<?= base_url('laporanController/pembelian') ?>" class="dropdown-item" <?= $lap_pembelian ?>>Pembelian</a>
+                            <a href="<?= base_url('laporanController/pemakaian') ?>" class="dropdown-item" <?= $lap_pemakaian ?>>Pemakaian</a>
                         </div>
                     </li>
                 </ul>

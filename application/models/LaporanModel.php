@@ -50,66 +50,80 @@ class LaporanModel extends CI_Model
         return $output;
     }
 
-    public function insert($post_data)
+    public function data_pemesanan($post_data)
     {
-        $query = array(
-            'plat' => $post_data['plat'],
-            'merek' => $post_data['merek'],
-            'tipe' => $post_data['tipe'],
-            'created_by' => $this->session->userdata('username'),
-            'created_at' => date('Y-m-d H:i:s')
-        );
-
-        $execute = $this->db->insert('m_kendaraan', $query);
-
-        return $execute;
-    }
-
-    public function edit($id)
-    {
-        $query = $this->db->select('*')
-            ->from('m_kendaraan')
-            ->where('rec_id', 1)
-            ->where('id', $id);
+        $query = $this->db->select('t_pesan_h.*, m_barang.barang, m_pemasok.nama, m_pengguna.fullname, t_pesan_d.jumlah,t_pesan_d.harga,t_pesan_d.total,')
+            ->from('t_pesan_h')
+            ->join('t_pesan_d', 't_pesan_d.kode_pesan = t_pesan_h.kode_pesan', 'left')
+            ->join('m_barang', 'm_barang.id = t_pesan_d.id_barang', 'left')
+            ->join('m_pemasok', 'm_pemasok.id = t_pesan_h.id_toko', 'left')
+            ->join('m_pengguna', 'm_pengguna.id = t_pesan_h.id_pengguna', 'left')
+            ->where('t_pesan_h.rec_id', 1)
+            ->where('t_pesan_h.tanggal <=', $post_data['tanggal']);
 
         $data = $query->get();
+
+        $results = array();
+        if ($data->num_rows() >= 1) {
+            $results = $data->result_array();
+        }
 
         $output = array(
             "status" => true,
             "message" => 'Data has been found',
-            "data" => $data->row(),
+            "data" => $results,
         );
 
         return $output;
     }
 
-    public function update($post_data)
+    public function data_pembelian($post_data)
     {
-        $query = array(
-            'plat' => $post_data['plat_edit'],
-            'merek' => $post_data['merek_edit'],
-            'tipe' => $post_data['tipe_edit'],
-            'updated_by' => $this->session->userdata('username'),
-            'updated_at' => date('Y-m-d H:i:s')
+        $query = $this->db->select('t_beli_h.*, m_barang.barang, t_beli_d.id_barang,t_beli_d.no_identitas,t_beli_d.keterangan as ket_det')
+            ->from('t_beli_h')
+            ->join('t_beli_d', 't_beli_d.id_beli = t_beli_h.id', 'left')
+            ->join('m_barang', 'm_barang.id = t_beli_d.id_barang', 'left')
+            ->where('t_beli_h.rec_id', 1)
+            ->where('t_beli_h.tanggal <=', $post_data['tanggal']);
+
+        $data = $query->get();
+
+        $results = array();
+        if ($data->num_rows() >= 1) {
+            $results = $data->result_array();
+        }
+
+        $output = array(
+            "status" => true,
+            "message" => 'Data has been found',
+            "data" => $results,
         );
 
-        $this->db->where('id', $post_data['id']);
-        $execute = $this->db->update('m_kendaraan', $query);
-
-        return $execute;
+        return $output;
     }
 
-    public function delete($id)
+    public function data_pemakaian($post_data)
     {
-        $query = array(
-            'rec_id' => 0,
-            'updated_by' => $this->session->userdata('username'),
-            'updated_at' => date('Y-m-d H:i:s')
+        $query = $this->db->select('t_pemakaian.*, m_barang.barang, m_kendaraan.plat, m_kendaraan.merek')
+            ->from('t_pemakaian')
+            ->join('m_barang', 'm_barang.id = t_pemakaian.id_barang', 'left')
+            ->join('m_kendaraan', 'm_kendaraan.id = t_pemakaian.id_kendaraan', 'left')
+            ->where('t_pemakaian.rec_id', 1)
+            ->where('t_pemakaian.tanggal <=', $post_data['tanggal']);
+
+        $data = $query->get();
+
+        $results = array();
+        if ($data->num_rows() >= 1) {
+            $results = $data->result_array();
+        }
+
+        $output = array(
+            "status" => true,
+            "message" => 'Data has been found',
+            "data" => $results,
         );
 
-        $this->db->where('id', $id);
-        $execute = $this->db->update('m_kendaraan', $query);
-
-        return $execute;
+        return $output;
     }
 }

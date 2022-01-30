@@ -29,71 +29,45 @@ class LaporanController extends CI_Controller
         $this->output->set_output(json_encode($output));
     }
 
-    public function insert()
+    public function pemesanan()
     {
-        $this->form_validation->set_rules('plat', 'Plat Kendaraan', 'required');
-        $this->form_validation->set_rules('merek', 'Merek Kendaraan', 'required');
-        $this->form_validation->set_rules('tipe', 'Tipe Kendaraan', 'required');
+        $this->session->set_userdata('menu', 'laporan');
+        $this->session->set_userdata('submenu', 'pemesanan');
 
-        if ($this->form_validation->run() == FALSE) {
-            $data['valid_error'] = 'insert';
-            $this->load->view('kendaraan', $data);
-        } else {
-
-            $execute = $this->laporanModel->insert($this->input->post());
-
-            if (!$execute) {
-                $status = '400';
-                $message = 'Data_tidak_berhasil_ditambahkan!';
-            } else {
-                $status = '201';
-                $message = 'Data_berhasil_ditambahkan!';
-            }
-            redirect(base_url('kendaraanController/index/' . $status . '/' . $message));
-        }
+        $this->load->view('laporan/pemesanan');
     }
 
-    public function edit()
+    public function data_pemesanan()
     {
-        $output = $this->laporanModel->edit($this->input->post('id'));
+        $output = $this->laporanModel->data_pemesanan($this->input->post());
         $this->output->set_output(json_encode($output));
     }
 
-    public function update()
+    public function pembelian()
     {
-        $this->form_validation->set_rules('plat_edit', 'Plat Kendaraan', 'required');
-        $this->form_validation->set_rules('merek_edit', 'Merek Kendaraan', 'required');
-        $this->form_validation->set_rules('tipe_edit', 'Tipe Kendaraan', 'required');
+        $this->session->set_userdata('menu', 'laporan');
+        $this->session->set_userdata('submenu', 'pembelian');
 
-        if ($this->form_validation->run() == FALSE) {
-            $data['valid_error'] = 'update';
-            $this->load->view('kendaraan', $data);
-        } else {
-
-            $execute = $this->laporanModel->update($this->input->post());
-
-            if (!$execute) {
-                $status = '400';
-                $message = 'Data_tidak_berhasil_dilakukan_perubahan!';
-            } else {
-                $status = '201';
-                $message = 'Data_berhasil_dilakukan_perubahan!';
-            }
-            redirect(base_url('kendaraanController/index/' . $status . '/' . $message));
-        }
+        $this->load->view('laporan/pembelian');
     }
 
-    public function delete($id)
+    public function data_pembelian()
     {
-        $execute = $this->laporanModel->delete($id);
+        $output = $this->laporanModel->data_pembelian($this->input->post());
+        $this->output->set_output(json_encode($output));
+    }
 
-        if (!$execute) {
-            $status = '400';
-            $message = 'Data_tidak_berhasil_dihapus!';
-        } else {
-            $status = '201';
-            $message = 'Data_berhasil_dihapus!';
-        }
-        redirect(base_url('kendaraanController/index/' . $status . '/' . $message));
+    public function pemakaian()
+    {
+        $this->session->set_userdata('menu', 'laporan');
+        $this->session->set_userdata('submenu', 'pemakaian');
+
+        $this->load->view('laporan/pemakaian');
+    }
+
+    public function data_pemakaian()
+    {
+        $output = $this->laporanModel->data_pemakaian($this->input->post());
+        $this->output->set_output(json_encode($output));
     }
 }

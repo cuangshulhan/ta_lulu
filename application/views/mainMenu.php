@@ -5,7 +5,7 @@ $this->load->view('layouts/header', array("active" => 'test'));
 <body>
 
     <div class="container-md">
-        <H1>CONTENT</H1>
+        <H1>BERANDA</H1>
     </div>
 
 </body>
